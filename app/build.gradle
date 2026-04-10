@@ -5,7 +5,7 @@ plugins {
 android {
     compileSdk 36
     defaultConfig {
-        applicationId "com.github.xfalcon.vhosts"
+        applicationId "com.github.looming.vhosts"
         minSdkVersion 19
         targetSdkVersion 36
         versionCode 43
@@ -45,7 +45,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.github.xfalcon.vhosts'
+    namespace 'com.github.looming.vhosts'
 
 }
 

@@ -16,7 +16,7 @@
 **
 */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -25,7 +25,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import com.github.xfalcon.vhosts.vservice.VhostsService;
+import com.github.looming.vhosts.vservice.VhostsService;
 
 /**
  * Implementation of App Widget functionality.

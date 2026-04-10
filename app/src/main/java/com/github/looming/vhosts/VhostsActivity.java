@@ -16,20 +16,24 @@
  **
  */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.github.clans.fab.FloatingActionButton;
-import com.github.xfalcon.vhosts.util.LogUtils;
-import com.github.xfalcon.vhosts.vservice.VhostsService;
+import com.github.looming.vhosts.util.FileUtils;
+import com.github.looming.vhosts.util.HttpUtils;
+import com.github.looming.vhosts.util.LogUtils;
+import com.github.looming.vhosts.vservice.DnsChange;
+import com.github.looming.vhosts.vservice.VhostsService;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.suke.widget.SwitchButton;
 
@@ -40,7 +44,6 @@ public class VhostsActivity extends AppCompatActivity {
     private static final String TAG = VhostsActivity.class.getSimpleName();
 
     private FirebaseAnalytics mFirebaseAnalytics;
-
 
     private boolean waitingForVPNStart;
 
@@ -54,6 +57,16 @@ public class VhostsActivity extends AppCompatActivity {
         }
     };
 
+    public static VhostsActivity instance;
+    public VhostsActivity() {
+        instance = this;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,28 +79,39 @@ public class VhostsActivity extends AppCompatActivity {
         LogUtils.context = getApplicationContext();
         final SwitchButton vpnButton = findViewById(R.id.button_start_vpn);
 
-        final Button selectHosts = findViewById(R.id.button_select_hosts);
+//        final Button selectHosts = findViewById(R.id.button_select_hosts);
         final FloatingActionButton fab_setting = findViewById(R.id.fab_setting);
-        final FloatingActionButton fab_boot = findViewById(R.id.fab_boot);
-        final FloatingActionButton fab_donation = findViewById(R.id.fab_donation);
+//        final FloatingActionButton fab_boot = findViewById(R.id.fab_boot);
+//        final FloatingActionButton fab_donation = findViewById(R.id.fab_donation);
 
-        if (checkHostUri() == -1) {
-            selectHosts.setText(getString(R.string.select_hosts));
-        }
+//        if (checkHostUri() == -1) {
+//            selectHosts.setText(getString(R.string.select_hosts));
+//        }
         if (BootReceiver.getEnabled(this)) {
-            fab_boot.setColorNormalResId(R.color.startup_on);
+//            fab_boot.setColorNormalResId(R.color.startup_on);
         }
         vpnButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 if (isChecked) {
-                    if (checkHostUri() == -1) {
-                        showDialog();
-                    } else {
-                        startVPN();
-                    }
+                    setVpnButtonEnable(false);
+                    //从网络下载Hosts文件
+                    downloadNetHosts(new Runnable() {
+                        @Override
+                        public void run() {
+                            startVPN();
+                            setVpnButtonEnable(true);
+                        }
+                    });
+
+//                    if (checkHostUri() == -1) {
+//                        showDialog();
+//                    } else {
+//                        startVPN();
+//                    }
                 } else {
                     shutdownVPN();
+                    setVpnButtonEnable(true);
                 }
             }
         });
@@ -97,40 +121,72 @@ public class VhostsActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
             }
         });
-        fab_boot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (BootReceiver.getEnabled(v.getContext())) {
-                    BootReceiver.setEnabled(v.getContext(), false);
-                    fab_boot.setColorNormalResId(R.color.startup_off);
-                } else {
-                    BootReceiver.setEnabled(v.getContext(), true);
-                    fab_boot.setColorNormalResId(R.color.startup_on);
-                }
-            }
-        });
-        selectHosts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectFile();
-            }
-        });
-        selectHosts.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                  startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                return false;
-            }
-        });
-        fab_donation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), DonationActivity.class));
-            }
-        });
+//        fab_boot.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (BootReceiver.getEnabled(v.getContext())) {
+//                    BootReceiver.setEnabled(v.getContext(), false);
+//                    fab_boot.setColorNormalResId(R.color.startup_off);
+//                } else {
+//                    BootReceiver.setEnabled(v.getContext(), true);
+//                    fab_boot.setColorNormalResId(R.color.startup_on);
+//                }
+//            }
+//        });
+//        selectHosts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                selectFile();
+//            }
+//        });
+//        selectHosts.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                  startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+//                return false;
+//            }
+//        });
+//        fab_donation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getApplicationContext(), DonationActivity.class));
+//            }
+//        });
 
         LocalBroadcastManager.getInstance(this).registerReceiver(vpnStateReceiver,
                 new IntentFilter(VhostsService.BROADCAST_VPN_STATE));
+    }
+
+    private void setVpnButtonEnable(boolean enable) {
+        final SwitchButton vpnButton = (SwitchButton) findViewById(R.id.button_start_vpn);
+        vpnButton.setEnabled(enable);
+        vpnButton.setAlpha(enable ? 1f : .5f);
+        final FloatingActionButton fab_setting = findViewById(R.id.fab_setting);
+        fab_setting.setClickable(enable);
+        fab_setting.setAlpha(enable ? 1f : .5f);
+    }
+
+    private Handler handler = null;
+    private void downloadNetHosts(Runnable callback) {
+        String netHostsUrl = getNetHostsUrl(getThis());
+        if(handler == null) handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Looper.prepare();
+                    String result = HttpUtils.get(netHostsUrl);
+                    FileUtils.writeFile(getThis().openFileOutput(SettingsFragment.NET_HOST_FILE, Context.MODE_PRIVATE), result);
+                    Toast.makeText(getThis(), String.format(getString(R.string.down_success), DnsChange.handle_hosts(getThis().openFileInput(SettingsFragment.NET_HOST_FILE))), Toast.LENGTH_LONG).show();
+                    handler.post(callback);
+                    Looper.loop();
+                } catch (Exception e) {
+                    Toast.makeText(getThis(), getString(R.string.down_error), Toast.LENGTH_LONG).show();
+                    LogUtils.e(TAG, e.getMessage(), e);
+                    handler.post(callback);
+                }
+            }
+        }).start();
     }
 
     private void launch() {
@@ -189,8 +245,8 @@ public class VhostsActivity extends AppCompatActivity {
     }
 
     private int checkHostUri() {
-        SharedPreferences settings =  androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        if (settings.getBoolean(SettingsFragment.IS_NET, false)) {
+//        SharedPreferences settings =  androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+//        if (settings.getBoolean(SettingsFragment.IS_NET, false)) {
             try {
                 openFileInput(SettingsFragment.NET_HOST_FILE).close();
                 return 2;
@@ -198,15 +254,15 @@ public class VhostsActivity extends AppCompatActivity {
                 LogUtils.e(TAG, "NET HOSTS FILE NOT FOUND", e);
                 return -2;
             }
-        } else {
-            try {
-                getContentResolver().openInputStream(Uri.parse(settings.getString(SettingsFragment.HOSTS_URI, null))).close();
-                return 1;
-            } catch (Exception e) {
-                LogUtils.e(TAG, "HOSTS FILE NOT FOUND", e);
-                return -1;
-            }
-        }
+//        } else {
+//            try {
+//                getContentResolver().openInputStream(Uri.parse(settings.getString(SettingsFragment.HOSTS_URI, null))).close();
+//                return 1;
+//            } catch (Exception e) {
+//                LogUtils.e(TAG, "HOSTS FILE NOT FOUND", e);
+//                return -1;
+//            }
+//        }
     }
 
     private void setUriByPREFS(Intent intent) {
@@ -271,15 +327,15 @@ public class VhostsActivity extends AppCompatActivity {
 
     private void setButton(boolean enable) {
         final SwitchButton vpnButton = (SwitchButton) findViewById(R.id.button_start_vpn);
-        final Button selectHosts = (Button) findViewById(R.id.button_select_hosts);
+//        final Button selectHosts = (Button) findViewById(R.id.button_select_hosts);
         if (enable) {
             vpnButton.setChecked(false);
-            selectHosts.setAlpha(1.0f);
-            selectHosts.setClickable(true);
+//            selectHosts.setAlpha(1.0f);
+//            selectHosts.setClickable(true);
         } else {
             vpnButton.setChecked(true);
-            selectHosts.setAlpha(.5f);
-            selectHosts.setClickable(false);
+//            selectHosts.setAlpha(.5f);
+//            selectHosts.setClickable(false);
         }
     }
 
@@ -304,4 +360,21 @@ public class VhostsActivity extends AppCompatActivity {
         builder.show();
     }
 
+    // 使用 SharedPreferences 存储字符串
+    public static void saveNetHostsUrl(Context context, String value) {
+        SharedPreferences prefs = context.getSharedPreferences("net_hosts_url", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("url", value);
+        editor.apply();
+    }
+
+    // 从 SharedPreferences 读取字符串
+    public static String getNetHostsUrl(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("net_hosts_url", Context.MODE_PRIVATE);
+        return prefs.getString("url", "");
+    }
+
+    public VhostsActivity getThis(){
+        return this;
+    }
 }

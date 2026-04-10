@@ -11,15 +11,12 @@
                 android:selectAllOnFocus="true"
                 android:summary="@string/pref_remote_hosts"
                 android:title="@string/title_pref_remote_hosts"/>
-    <CheckBoxPreference
-            android:defaultValue="false"
-            android:title="@string/pref_is_net" android:key="IS_NET"/>
     </PreferenceCategory>
 
     <PreferenceCategory
             android:title="@string/pref_ps_set_cus_dns">
     <EditTextPreference
-            android:defaultValue="8.8.8.8"
+            android:defaultValue="223.5.5.5"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_dns" android:key="IPV4_DNS"/>

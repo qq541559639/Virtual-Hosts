@@ -14,7 +14,7 @@
  ** limitations under the License.
  */
 
-package com.github.xfalcon.vhosts.vservice;
+package com.github.looming.vhosts.vservice;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -24,18 +24,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import com.github.xfalcon.vhosts.NetworkReceiver;
-import com.github.xfalcon.vhosts.R;
-import com.github.xfalcon.vhosts.SettingsFragment;
-import com.github.xfalcon.vhosts.VhostsActivity;
-import com.github.xfalcon.vhosts.util.LogUtils;
+import com.github.looming.vhosts.NetworkReceiver;
+import com.github.looming.vhosts.R;
+import com.github.looming.vhosts.SettingsFragment;
+import com.github.looming.vhosts.util.LogUtils;
 import org.xbill.DNS.Address;
 
 import java.io.*;
@@ -54,7 +52,7 @@ public class VhostsService extends VpnService {
     private static final String VPN_ADDRESS6 = "fe80:49b1:7e4f:def2:e91f:95bf:fbb6:1111";
     private static final String VPN_ROUTE = "0.0.0.0"; // Intercept everything
     private static final String VPN_ROUTE6 = "::"; // Intercept everything
-    private static String VPN_DNS4 = "8.8.8.8";
+    private static String VPN_DNS4 = "223.5.5.5";
     private static String VPN_DNS6 = "2001:4860:4860::8888";
 
     public static final String BROADCAST_VPN_STATE = VhostsService.class.getName() + ".VPN_STATE";
@@ -134,34 +132,35 @@ public class VhostsService extends VpnService {
 
     private void setupHostFile() {
         SharedPreferences settings = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean is_net = settings.getBoolean(SettingsFragment.IS_NET, false);
-        String uri_path = settings.getString(SettingsFragment.HOSTS_URI, null);
+//        final boolean is_net = settings.getBoolean(SettingsFragment.IS_NET, false);
+        final boolean is_net = true;
+//        String uri_path = settings.getString(SettingsFragment.HOSTS_URI, null);
         try {
             final InputStream inputStream;
-            if (is_net)
+//            if (is_net)
                 inputStream = openFileInput(SettingsFragment.NET_HOST_FILE);
-            else
-                inputStream = getContentResolver().openInputStream(Uri.parse(uri_path));
+//            else
+//                inputStream = getContentResolver().openInputStream(Uri.parse(uri_path));
             new Thread() {
                 public void run() {
                     if (DnsChange.handle_hosts(inputStream) == 0) {
                         Looper.prepare();
-                        if(is_net){
+//                        if(is_net){
                             Toast.makeText(getApplicationContext(), R.string.no_net_record, Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(), R.string.no_local_record, Toast.LENGTH_LONG).show();
-                        }
+//                        }else{
+//                            Toast.makeText(getApplicationContext(), R.string.no_local_record, Toast.LENGTH_LONG).show();
+//                        }
                         Looper.loop();
                     }
                 }
             }.start();
 
         } catch (Exception e) {
-            if(is_net){
+//            if(is_net){
                 Toast.makeText(getApplicationContext(), R.string.no_net_record, Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(getApplicationContext(), R.string.no_local_record, Toast.LENGTH_LONG).show();
-            }
+//            }else{
+//                Toast.makeText(getApplicationContext(), R.string.no_local_record, Toast.LENGTH_LONG).show();
+//            }
             LogUtils.e(TAG, "error setup host file service", e);
         }
     }

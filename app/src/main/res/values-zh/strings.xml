@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Virtual Hosts</string>
+    <string name="app_name">虚拟Hosts</string>
     <string name="action_settings">Settings</string>
     <string name="update_button">更新</string>
     <string name="update_hosts">选择ip更新hosts</string>
@@ -19,7 +19,7 @@
     </string>
     <string name="dialog_confirm">确定</string>
     <string name="dialog_cancel">取消</string>
-    <string name="dns_server">114.114.114.114</string>
+    <string name="dns_server">223.5.5.5</string>
     <string name="file_select_error">错误 ! 找不到系统文件浏览器,将使用Url模式</string>
     <string name="permission_error">错误! 没有权限</string>
     <string name="fab_label_boot">开机启动</string>
@@ -54,6 +54,6 @@
     <string name="dns4_error">DNS 输入不正确</string>
     <string name="download_alert">正在下载文件...</string>
 
-    <string name="no_net_record">提示! 网络文件不存在DNS记录,请检查</string>
-    <string name="no_local_record">提示! 本地文件不存在DNS记录,请检查</string>
+    <string name="no_net_record">提示! 网络文件不存在DNS记录</string>
+    <string name="no_local_record">提示! 本地文件不存在DNS记录</string>
 </resources>

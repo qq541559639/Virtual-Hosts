@@ -14,10 +14,10 @@
 ** limitations under the License.
 */
 
-package com.github.xfalcon.vhosts.vservice;
+package com.github.looming.vhosts.vservice;
 
 
-import com.github.xfalcon.vhosts.util.LogUtils;
+import com.github.looming.vhosts.util.LogUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

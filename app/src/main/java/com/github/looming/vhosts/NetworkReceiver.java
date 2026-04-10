@@ -17,7 +17,7 @@
 */
 
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +26,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import com.github.xfalcon.vhosts.util.LogUtils;
+import com.github.looming.vhosts.util.LogUtils;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

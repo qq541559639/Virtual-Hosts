@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Virtual Hosts</string>
+    <string name="app_name">Remote Virtual Hosts</string>
     <string name="action_settings">Cài đặt</string>
     <string name="update_button">Cập nhật</string>
     <string name="update_hosts">Chọn ip cập nhật tập tin hosts</string>
@@ -19,7 +19,7 @@
     </string>
     <string name="dialog_confirm">Xác nhận</string>
     <string name="dialog_cancel">Hủy bỏ</string>
-    <string name="dns_server">8.8.8.8</string>
+    <string name="dns_server">223.5.5.5</string>
     <string name="file_select_error">Lỗi ! Trình duyệt tệp hệ thống không tìm thấy, sẽ sử dụng chế độ Url</string>
     <string name="permission_error">Lỗi! Không cho phép</string>
     <string name="fab_label_boot">Mở khi khởi động máy</string>
@@ -58,6 +58,6 @@
     <string name="dns4_error">Nhập DNS không đúng.</string>
     <string name="download_alert">Đang tải xuống tập tin ...</string>
 
-    <string name = "no_net_record">cảnh báo! tệp lưu trữ mạng không có bản ghi dns, vui lòng kiểm tra</string>
-    <string name = "no_local_record">cảnh báo! tệp máy chủ cục bộ không có bản ghi dns, vui lòng kiểm tra</string>
+    <string name = "no_net_record">cảnh báo! tệp lưu trữ mạng không có bản ghi dns</string>
+    <string name = "no_local_record">cảnh báo! tệp máy chủ cục bộ không có bản ghi dns</string>
 </resources>

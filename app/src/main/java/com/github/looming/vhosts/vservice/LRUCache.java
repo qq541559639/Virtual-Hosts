@@ -14,7 +14,7 @@
 ** limitations under the License.
 */
 
-package com.github.xfalcon.vhosts.vservice;
+package com.github.looming.vhosts.vservice;
 
 import java.util.LinkedHashMap;
 

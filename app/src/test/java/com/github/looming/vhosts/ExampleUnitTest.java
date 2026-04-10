@@ -1,4 +1,4 @@
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import org.junit.Test;
 

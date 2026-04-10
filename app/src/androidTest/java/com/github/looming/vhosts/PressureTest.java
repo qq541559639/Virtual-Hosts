@@ -16,7 +16,7 @@
 **
 */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 
 import android.content.Context;
@@ -60,7 +60,7 @@ public class PressureTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-        assertEquals("com.github.xfalcon.vhosts", appContext.getPackageName());
+        assertEquals("com.github.looming.vhosts", appContext.getPackageName());
         onView(withId(R.id.activity_main)).perform(click());
         Thread.sleep(1000*3);
         ArrayList<Future> list=new ArrayList<Future>();

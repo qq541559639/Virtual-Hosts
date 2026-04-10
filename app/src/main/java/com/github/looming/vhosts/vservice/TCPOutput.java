@@ -14,7 +14,7 @@
 ** limitations under the License.
 */
 
-package com.github.xfalcon.vhosts.vservice;
+package com.github.looming.vhosts.vservice;
 
 
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.github.xfalcon.vhosts.util.LogUtils;
-import com.github.xfalcon.vhosts.vservice.Packet.TCPHeader;
-import com.github.xfalcon.vhosts.vservice.TCB.TCBStatus;
+import com.github.looming.vhosts.util.LogUtils;
+import com.github.looming.vhosts.vservice.Packet.TCPHeader;
+import com.github.looming.vhosts.vservice.TCB.TCBStatus;
 
 public class TCPOutput implements Runnable
 {

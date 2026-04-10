@@ -16,7 +16,7 @@
  **
  */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.content.*;
 import android.net.Uri;
@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.android.billingclient.api.*;
-import com.github.xfalcon.vhosts.util.LogUtils;
+import com.github.looming.vhosts.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +44,8 @@ public class DonationActivity extends AppCompatActivity {
      */
     private static final boolean IS_GooglePlay=BuildConfig.IS_GooglePlay;
     private static final int PLAY_PURCHASE_REQUEST_CODE = 0x15;
-    private static final String STORE_URI2 = "https://play.google.com/store/apps/details?id=com.github.xfalcon.vhosts";
-    private static final String STORE_URI = "market://details?id=com.github.xfalcon.vhosts";
+    private static final String STORE_URI2 = "https://play.google.com/store/apps/details?id=com.github.looming.vhosts";
+    private static final String STORE_URI = "market://details?id=com.github.looming.vhosts";
     private static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxic/nGZvXgn3O0Sq8kSZCMZ0g6I1VYm1AoT8FlXegHJ1Fm+PAZ0Na0NLEXnP7okdxlRuUsO9SmUH4lv0Mz3sY0RXwIPCchiCMUn8wKGXtKY4Bh+R3xdt8DLDBc+h4i9jZYnVW1ntv4yuQrcowrUHQauRW0+sv+AGQmJuJdASCqwLgMBGa4uZh0uDmtTTfhEFaHmaUHlRBA4EgrABIJCF5QDQyYYDx75pncewb5L0NL8zF8dkFwJxx6XtWQA5glJ4C9pyp5JE5PGWgoEN1k37hXnDxuP8a+GSxF5XFeitLNDi8fL5z93gG4rayouyvMpzYmZ29CwKYgDd6uh73SQAUwIDAQAB";
     private static final String ITEM_SKU = "donate";
     private static final String ITEM_SKU_2 = "donate2";

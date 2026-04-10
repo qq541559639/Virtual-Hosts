@@ -1,4 +1,4 @@
-package com.github.xfalcon.vhosts.util;
+package com.github.looming.vhosts.util;
 
 import java.io.IOException;
 import java.io.InputStream;

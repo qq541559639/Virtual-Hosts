@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Virtual Hosts</string>
+    <string name="app_name">Remote Virtual Hosts</string>
     <string name="action_settings">Settings</string>
     <string name="update_button">update</string>
     <string name="update_hosts">select ip update hosts</string>
@@ -19,7 +19,7 @@
     </string>
     <string name="dialog_confirm">confirm</string>
     <string name="dialog_cancel">cancel</string>
-    <string name="dns_server">8.8.8.8</string>
+    <string name="dns_server">223.5.5.5</string>
     <string name="file_select_error">Error ! System File Browser Not Find, Will Use Url Mode</string>
     <string name="permission_error">Error ! No Permission</string>
     <string name="fab_label_setting">Setting</string>
@@ -58,7 +58,7 @@
     <string name="pref_dns_title">use custom dns</string>
     <string name="download_alert">Downloading File...</string>
 
-    <string name="no_net_record">warning! net hosts file no dns record, please check</string>
-    <string name="no_local_record">warning! local hosts file no dns record, please check</string>
+    <string name="no_net_record">warning! net hosts file no dns record</string>
+    <string name="no_local_record">warning! local hosts file no dns record</string>
 
 </resources>

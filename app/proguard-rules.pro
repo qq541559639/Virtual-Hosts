@@ -16,7 +16,7 @@
 #   public *;
 #}
 
--assumenosideeffects class com.github.xfalcon.vhosts.util.LogUtils {
+-assumenosideeffects class com.github.looming.vhosts.util.LogUtils {
     public static *** d(...);
     public static *** e(...);
     public static *** i(...);

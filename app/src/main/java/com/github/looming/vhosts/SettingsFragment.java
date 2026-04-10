@@ -16,7 +16,7 @@
  **
  */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -31,10 +31,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.preference.*;
-import com.github.xfalcon.vhosts.util.FileUtils;
-import com.github.xfalcon.vhosts.util.HttpUtils;
-import com.github.xfalcon.vhosts.util.LogUtils;
-import com.github.xfalcon.vhosts.vservice.DnsChange;
+import com.github.looming.vhosts.util.FileUtils;
+import com.github.looming.vhosts.util.HttpUtils;
+import com.github.looming.vhosts.util.LogUtils;
+import com.github.looming.vhosts.vservice.DnsChange;
 import org.xbill.DNS.Address;
 
 import java.util.regex.Matcher;
@@ -105,7 +105,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String url = (String)newValue;
                 if (isUrl(url)) {
-                    setProgressDialog(preference.getContext(), url);
+                    VhostsActivity.saveNetHostsUrl(VhostsActivity.instance, url);
+//                    setProgressDialog(preference.getContext(), url);
                     return true;
                 } else {
                     Toast.makeText(preference.getContext(), getString(R.string.url_error), Toast.LENGTH_LONG).show();

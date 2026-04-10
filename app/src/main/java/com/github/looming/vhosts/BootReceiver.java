@@ -16,16 +16,16 @@
 **
 */
 
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.github.xfalcon.vhosts.vservice.VhostsService;
+import com.github.looming.vhosts.vservice.VhostsService;
 //use adb for test
-//am broadcast -a android.intent.action.BOOT_COMPLETED -p com.github.xfalcon.vhosts
+//am broadcast -a android.intent.action.BOOT_COMPLETED -p com.github.looming.vhosts
 public class BootReceiver extends BroadcastReceiver {
 
     public static final String RECONNECT_ON_REBOOT = "RECONNECT_ON_REBOOT";

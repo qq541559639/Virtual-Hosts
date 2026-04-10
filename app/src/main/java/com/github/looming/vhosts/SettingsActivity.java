@@ -15,7 +15,7 @@
  **along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **
  */
-package com.github.xfalcon.vhosts;
+package com.github.looming.vhosts;
 
 import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
